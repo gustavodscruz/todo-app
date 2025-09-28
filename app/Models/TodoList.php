@@ -19,7 +19,7 @@ class TodoList extends Authenticatable implements JWTSubject
         'priority',
         'is_completed',
         'due_date',
-        'is_archieved'
+        'is_archived'
     ];
 
     protected $hidden = [

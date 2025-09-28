@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TodoList>
  */
-class TodoListControllerFactory extends Factory
+class TodoListFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,10 @@ class TodoListControllerFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'title' => $this->faker->name(),
+            'description' => $this->faker->text(),
+            'due_date' => $this->faker->date(),
+            'priority' => $this->faker->randomElement(['low', 'medium', 'high', 'urgent']),
         ];
     }
 }

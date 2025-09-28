@@ -44,4 +44,6 @@ Route::name('todo-lists.')
         Route::post('/', [TodoListController::class, 'store'])->name('store');
         Route::get('/', [TodoListController::class, 'index'])->name('index');
         Route::get('{id}', [TodoListController::class, 'show'])->name('show');
+        Route::delete('{id}', [TodoListController::class, 'destroy'])->name('destroy');
+        Route::put('{id}', [TodoListController::class, 'update'])->name('update');
     });

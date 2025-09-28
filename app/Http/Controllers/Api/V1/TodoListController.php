@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\V1\TodoListStoreRequest;
+use App\Http\Requests\Api\V1\TodoListUpdateRequest;
 use App\Http\Requests\Api\V1\UserStoreRequest;
 use App\Http\Requests\Api\V1\UserUpdateRequest;
 use App\Http\Resources\Api\TodoList\TodoListResource;
@@ -16,7 +17,8 @@ use Illuminate\Support\Collection;
 class TodoListController extends BaseApiController
 {
     public function __construct(protected readonly TodoListServiceInterface $todoListService)
-    {}
+    {
+    }
 
     public function store(TodoListStoreRequest $request): JsonResponse
     {
@@ -30,7 +32,7 @@ class TodoListController extends BaseApiController
         return $this->createdResponse(new TodoListResource($todo));
     }
 
-    public function index() : JsonResponse
+    public function index(): JsonResponse
     {
         logger()->debug('TodoListController@findAllByUser');
 
@@ -41,13 +43,31 @@ class TodoListController extends BaseApiController
         return $this->successResponse(Collection::make($todo_lists));
     }
 
-    public function show(int $id) : JsonResponse
+    public function show(int $id): JsonResponse
     {
         logger()->debug('TodoListController@show', [$id]);
 
         $todo_list = $this->todoListService->getTodoListById($id);
 
         return $this->successResponse(new TodoListResource($todo_list));
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $deleted = $this->todoListService->deleteTodoList($id);
+
+        if (!$deleted) return $this->notFoundResponse(['message' => 'Todo not deleted.']);
+
+        return $this->noContentResponse();
+    }
+
+    public function update(int $id, TodoListUpdateRequest $request): JsonResponse
+    {
+        logger()->debug('TodoListController@update', [$id, $request->validated()]);
+
+        $updatedTodoList = $this->todoListService->updateTodoList($id, $request->validated());
+
+        return $this->successResponse(new TodoListResource($updatedTodoList));
     }
 
 }

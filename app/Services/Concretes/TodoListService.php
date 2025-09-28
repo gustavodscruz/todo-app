@@ -55,7 +55,17 @@ class TodoListService extends BaseService implements TodoListServiceInterface
     public function updateTodoList($id, $data): Model
     {
         try {
-            return $this->repository->update($id, $data);
+            $payload = is_array($data) ? $data : (array) $data;
+
+            if (array_key_exists('is_completed', $payload) && $payload['is_completed']) {
+                $payload['completed_at'] = now()->toDateTimeString();
+            }
+
+            if(array_key_exists('is_completed', $payload) && !$payload['is_completed']) {
+                $payload['completed_at'] = null;
+            }
+
+            return $this->repository->update($id, $payload);
         }
         catch (ModelNotFoundException) {
             throw new ModelNotFoundException('Todo List not found');
