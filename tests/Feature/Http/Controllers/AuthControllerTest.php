@@ -26,7 +26,7 @@ it('registers new user successfully', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
     ])
-        ->assertStatus(200)
+        ->assertStatus(201)
         ->assertJsonStructure([
             'data' => [
                 'user',

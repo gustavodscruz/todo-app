@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\TodoListController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('users/all', [UserController::class, 'all'])->name('users.all');
     Route::apiResource('users', UserController::class)->names('users');
 });
+
+Route::name('todo-lists.')
+    ->prefix('todo-lists')
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::post('/', [TodoListController::class, 'store'])->name('store');
+        Route::get('/', [TodoListController::class, 'index'])->name('index');
+        Route::get('{id}', [TodoListController::class, 'show'])->name('show');
+    });

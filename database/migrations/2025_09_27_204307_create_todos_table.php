@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('todo_list_id')->constrained('todo_lists');
             $table->boolean('is_completed')->default(false);
-            $table->dateTime('completed_at')->nullable();
+            $table->string('title');
+            $table->longText('description')->nullable();
             $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('low');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('due_date')->nullable();
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
     }

@@ -2,20 +2,29 @@
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Todo extends Authenticatable implements JWTSubject
+class TodoList extends Authenticatable implements JWTSubject
 {
-    public function getJWTIdentifier(): mixed
-    {
-        return $this->getKey();
-    }
 
-    public function getJWTCustomClaims(): array
-    {
-        return [];
-    }
+    use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'priority',
+        'is_completed',
+        'due_date',
+        'is_archieved'
+    ];
+
+    protected $hidden = [
+        'user_id'
+    ];
 
     public function scopeCompleted($query)
     {
@@ -39,9 +48,18 @@ class Todo extends Authenticatable implements JWTSubject
             'is_completed' => 'boolean',
             'is_archived' => 'boolean',
             'due_date' => 'datetime',
-            'completed_at' => 'datetime',
             'priority' => Priority::class,
         ];
+    }
+
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        return [];
     }
 
 }
