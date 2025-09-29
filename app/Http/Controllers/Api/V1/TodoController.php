@@ -37,18 +37,18 @@ class TodoController extends BaseApiController
         logger()->debug('TodoController@store', $request->validated());
 
         $data = array_merge($request->validated(), ['user_id' => auth()->id()]);
-        $todo = $this->todoService->create($data);
+        $todo = $this->todoService->createTodo($data);
         return $this->createdResponse(new TodoResource($todo));
     }
 
     public function update($id, TodoUpdateRequest $request) : JsonResponse {
         logger()->debug('TodoController@update', $request->validated());
-        $todo = $this->todoService->update($id, $request->validated());
+        $todo = $this->todoService->updateTodo($id, $request->validated());
         return $this->successResponse(new TodoResource($todo));
     }
 
     public function destroy(int $id) : JsonResponse {
-        $this->todoService->delete($id);
+        $this->todoService->deleteTodo($id);
         return $this->noContentResponse();
     }
 

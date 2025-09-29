@@ -41,7 +41,17 @@ class TodoService extends BaseService implements TodoServiceInterface
 
     public function updateTodo($id, $data): Model
     {
-        return $this->repository->update($id, $data);
+        $payload = is_array($data) ? $data : (array)$data;
+
+        if (array_key_exists('is_completed', $payload) && $payload['is_completed']) {
+            $payload['completed_at'] = now()->toDateTimeString();
+        }
+
+        if (array_key_exists('is_completed', $payload) && !$payload['is_completed']) {
+            $payload['completed_at'] = null;
+        }
+
+        return $this->repository->update($id, $payload);
     }
 
     public function deleteTodo(int $id): bool

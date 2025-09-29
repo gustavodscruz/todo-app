@@ -29,7 +29,7 @@ class TodoListResource extends JsonResource
             'todos' => TodoShortedResource::collection($this->whenLoaded('todos')),
             'is_completed' => (bool) $this->is_completed,
             'is_archived' => (bool) $this->is_archived,
-            'completed_at' => $this->when($this->completed_at, $this->completed_at),
+            'completed_at' => $this->completed_at,
             'created_at' => $this->when($this->created_at, $this->created_at->toDateTimeString()),
             'updated_at' => $this->when($this->updated_at, $this->updated_at->toDateTimeString())
         ];

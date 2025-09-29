@@ -54,7 +54,7 @@ Route::name('todos.')
     ->middleware('auth:api')
     ->group(function () {
         Route::post('/', [TodoController::class, 'store'])->name('store');
-        Route::get('/pending', [TodoController::class, 'showPendingTasks'])->name('showPendingTasks');
+        Route::get('/pending', [TodoController::class, 'showPendingTasks'])->name('pending');
         Route::get('{id}', [TodoController::class, 'show'])->name('show');
         Route::delete('{id}', [TodoController::class, 'destroy'])->name('destroy');
         Route::put('{id}', [TodoController::class, 'update'])->name('update');

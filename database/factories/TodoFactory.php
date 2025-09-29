@@ -1,30 +1,23 @@
 <?php
 
 namespace Database\Factories;
-
-use App\Models\User;
+use App\Models\TodoList;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TodoList>
- */
-class TodoListFactory extends Factory
+class TodoFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        $user = User::factory()->create();
+        $todo_list = TodoList::factory()->create();
 
         return [
             'title' => $this->faker->name(),
             'description' => $this->faker->text(),
             'due_date' => $this->faker->date(),
             'priority' => $this->faker->randomElement(['low', 'medium', 'high', 'urgent']),
-            'user_id' => $user->getKey(),
+            'todo_list_id' => $todo_list->getKey(),
+            'user_id' => $todo_list->getAttribute('user_id'),
         ];
     }
+
 }
