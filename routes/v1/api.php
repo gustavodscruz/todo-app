@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\TodoController;
 use App\Http\Controllers\Api\V1\TodoListController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +48,15 @@ Route::name('todo-lists.')
         Route::delete('{id}', [TodoListController::class, 'destroy'])->name('destroy');
         Route::put('{id}', [TodoListController::class, 'update'])->name('update');
     });
+
+Route::name('todos.')
+    ->prefix('todos')
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::post('/', [TodoController::class, 'store'])->name('store');
+        Route::get('/pending', [TodoController::class, 'showPendingTasks'])->name('showPendingTasks');
+        Route::get('{id}', [TodoController::class, 'show'])->name('show');
+        Route::delete('{id}', [TodoController::class, 'destroy'])->name('destroy');
+        Route::put('{id}', [TodoController::class, 'update'])->name('update');
+    });
+

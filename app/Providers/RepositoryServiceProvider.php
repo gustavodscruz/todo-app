@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Todo\Concretes\TodoRepository;
+use App\Repositories\Todo\Contracts\TodoRepositoryInterface;
 use App\Repositories\TodoList\Concretes\TodoListRepository;
 use App\Repositories\TodoList\Contracts\TodoListRepositoryInterface;
 use App\Repositories\User\Concretes\UserRepository;
@@ -18,6 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // Register repository bindings here
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(TodoListRepositoryInterface::class, TodoListRepository::class);
+        $this->app->bind(TodoRepositoryInterface::class, TodoRepository::class);
     }
 
     /**

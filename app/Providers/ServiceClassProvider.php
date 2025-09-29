@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Services\Concretes\AuthService;
 use App\Services\Concretes\TodoListService;
+use App\Services\Concretes\TodoService;
 use App\Services\Concretes\UserService;
 use App\Services\Contracts\AuthServiceInterface;
 use App\Services\Contracts\TodoListServiceInterface;
+use App\Services\Contracts\TodoServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -25,6 +27,8 @@ class ServiceClassProvider extends BaseServiceProvider
         $this->app->bind(AuthServiceInterface::class, AuthService::class);
 
         $this->app->bind(TodoListServiceInterface::class, TodoListService::class);
+
+        $this->app->bind(TodoServiceInterface::class, TodoService::class);
     }
 
     /**

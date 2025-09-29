@@ -12,7 +12,7 @@ interface TodoListServiceInterface extends BaseServiceInterface
 {
     public function getTodoLists(int $id) : Collection;
 
-    public function getTodoListById(int $id) : TodoList;
+    public function getTodoListById(int $id) : Model;
 
     public function createTodoList($data) : Model;
 

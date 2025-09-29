@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\TodoList;
 
+use App\Http\Resources\Api\Todo\TodoResource;
+use App\Http\Resources\Api\Todo\TodoShortedResource;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +26,7 @@ class TodoListResource extends JsonResource
             'description' => $this->description,
             'due_date' => $this->when($this->due_date, $this->due_date->toDateTimeString()),
             'priority' => $this->priority,
+            'todos' => TodoShortedResource::collection($this->whenLoaded('todos')),
             'is_completed' => (bool) $this->is_completed,
             'is_archived' => (bool) $this->is_archived,
             'completed_at' => $this->when($this->completed_at, $this->completed_at),

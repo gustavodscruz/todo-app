@@ -17,22 +17,6 @@ class Todo extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function scopeCompleted($query)
-    {
-        return $query->where('is_completed', true);
-    }
-
-    public function scopePending($query)
-    {
-        return $query->where('is_completed', false);
-    }
-
-    public function scopePriority($query, Priority $priority)
-    {
-        return $query->where('priority', $priority->value);
-    }
-
-
     protected function casts(): array
     {
         return [

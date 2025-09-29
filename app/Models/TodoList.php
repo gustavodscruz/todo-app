@@ -26,6 +26,11 @@ class TodoList extends Authenticatable implements JWTSubject
         'user_id'
     ];
 
+    public function todos()
+    {
+        return $this->hasMany(Todo::class, 'todo_list_id');
+    }
+
     public function scopeCompleted($query)
     {
         return $query->where('is_completed', true);
